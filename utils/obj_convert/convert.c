@@ -22,10 +22,10 @@ int main(int argc, char* argv[])
     header.face_count = data.face_count;
     header.material_count = data.material_count;
     
-    FILE *pFile;
-    pFile = fopen(argv[2], "wb");
+    FILE *p_file;
+    p_file = fopen(argv[2], "wb");
     
-    if(!pFile) 
+    if(!p_file) 
     {
         puts("Destination is not writable");
         return -1;
@@ -34,28 +34,28 @@ int main(int argc, char* argv[])
 	for(i=0; i<data.vertex_count; i++)
 	{
 	    obj_vector *o = data.vertex_list[i];
-    	fwrite (o, 1, sizeof(RT_Vector), pFile);    
+    	fwrite (o, 1, sizeof(RT_Vector), p_file);    
     }
     
     for(i=0; i<data.vertex_normal_count; i++)
 	{
 	    obj_vector *o = data.vertex_normal_list[i];
-    	fwrite (o, 1, sizeof(RT_Vector), pFile);    
+    	fwrite (o, 1, sizeof(RT_Vector), p_file);    
     }
     
 	for(i=0; i<data.face_count; i++)
 	{
 	    obj_face *o = data.face_list[i];
-	    fwrite (o, 1, sizeof(RT_Face), pFile); 
+	    fwrite (o, 1, sizeof(RT_Face), p_file); 
     }
     
 	for(i=0; i<data.material_count; i++)
 	{
 	    obj_material *o = data.material_list[i];
-	    fwrite (o, 1, sizeof(RT_Material), pFile); 
+	    fwrite (o, 1, sizeof(RT_Material), p_file); 
     }
     
-    fclose (pFile);
+    fclose (p_file);
     delete_obj_data(&data);
     puts("Data successfully written");
     return 0;
