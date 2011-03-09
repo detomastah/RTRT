@@ -30,29 +30,31 @@ int main(int argc, char* argv[])
         puts("Destination is not writable");
         return -1;
     }
+    
+    fwrite(&header, 1, sizeof(RT_Scene), p_file);    
 
 	for(i=0; i<data.vertex_count; i++)
 	{
 	    obj_vector *o = data.vertex_list[i];
-    	fwrite (o, 1, sizeof(RT_Vector), p_file);    
+    	fwrite(o, 1, sizeof(RT_Vector), p_file);    
     }
     
     for(i=0; i<data.vertex_normal_count; i++)
 	{
 	    obj_vector *o = data.vertex_normal_list[i];
-    	fwrite (o, 1, sizeof(RT_Vector), p_file);    
+    	fwrite(o, 1, sizeof(RT_Vector), p_file);    
     }
     
 	for(i=0; i<data.face_count; i++)
 	{
 	    obj_face *o = data.face_list[i];
-	    fwrite (o, 1, sizeof(RT_Face), p_file); 
+	    fwrite(o, 1, sizeof(RT_Face), p_file); 
     }
     
 	for(i=0; i<data.material_count; i++)
 	{
 	    obj_material *o = data.material_list[i];
-	    fwrite (o, 1, sizeof(RT_Material), p_file); 
+	    fwrite(o, 1, sizeof(RT_Material), p_file); 
     }
     
     fclose (p_file);
