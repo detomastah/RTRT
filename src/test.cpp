@@ -1,3 +1,22 @@
+/* 
+    RTRT source code
+    Copyright (C) 2011  Łukasz Pełszyński
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 #include <stdio.h>
 #include <SDL/SDL.h>
 
@@ -7,13 +26,6 @@
 #define DEPTH 32
 
 #include "camera.h"
-
-void printVector(obj_vector *v)
-{
-	printf("%.2f,", v->e[0] );
-	printf("%.2f,", v->e[1] );
-	printf("%.2f  ", v->e[2] );
-}
 
 int main(int argc, char* argv[])
 {
@@ -32,8 +44,9 @@ int main(int argc, char* argv[])
     }
     
     int i, j;
-    RT_Scene data;
-    RT_Scene_Load(&data, argv[1]);
+    Scene s;
+    s.LoadFromFile(argv[1]);
+    
     /*
     if(parse_obj_scene(&data, "cornell_box.obj")) {
         printf("Face count: %d\n", data.face_count);
@@ -58,9 +71,9 @@ int main(int argc, char* argv[])
         RT_Camera_Construct(&cam, screen, WIDTH, HEIGHT);
         if(SDL_MUSTLOCK(screen)) 
         {
-            if(SDL_LockSurface(screen) < 0) return;
+            if(SDL_LockSurface(screen) < 0) return 1;
         }
-        cam.render(&cam, &data);
+        cam.render(&cam, &s);
         if(SDL_MUSTLOCK(screen)) SDL_UnlockSurface(screen);
         SDL_Flip(screen); 
          //DrawScreen(screen,h++);

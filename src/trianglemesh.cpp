@@ -17,9 +17,20 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#ifndef BASICS
-#define BASICS
+#include "trianglemesh.h"
+
+TriangleMesh::TriangleMesh(int nv, int nt, Point *P, int *vi, int *mi) {
+    nverts = nv;
+    ntris = nt;
+    p = new Point[nv];
+    memcpy(p, P, nv * sizeof(Point));
+    vertexIndex = new int[3 * ntris];
+    memcpy(vertexIndex, vi, 3 * ntris * sizeof(int));
+    materialIndex = new int[ntris];
+    memcpy(materialIndex, mi, ntris * sizeof(int));
+}
 
 
-
-#endif
+int Triangle::GetMaterialIndex() {
+    return (v - mesh->vertexIndex)/sizeof(int);
+}

@@ -1,13 +1,17 @@
 all: converter
-	gcc -c src/scene.c -o src/obj/scene.o
-	gcc -c src/camera.c -o src/obj/camera.o
-	gcc -c src/face.c -o src/obj/face.o
-	gcc -c src/vector.c -o src/obj/vector.o
-	gcc src/test.c \
-	    src/obj/face.o \
+	g++ -c src/scene.cpp -o src/obj/scene.o
+	g++ -c src/camera.cpp -o src/obj/camera.o
+	g++ -c src/geometry.cpp -o src/obj/geometry.o
+	g++ -c src/timer.cpp -o src/obj/timer.o
+	g++ -c src/util.cpp -o src/obj/util.o
+	g++ -c src/trianglemesh.cpp -o src/obj/trianglemesh.o		
+	g++ src/test.cpp \
 	    src/obj/camera.o \
-	    src/obj/vector.o \
+	    src/obj/geometry.o \
 	    src/obj/scene.o \
+	    src/obj/timer.o \
+	    src/obj/trianglemesh.o \
+	    src/obj/util.o \
 	    -lSDL -o test
 converter:
 	cd utils/obj_convert; $(MAKE)

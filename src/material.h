@@ -17,9 +17,25 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#ifndef BASICS
-#define BASICS
+#ifndef MATERIAL_H
+#define MATERIAL_H
 
+#define OBJ_FILENAME_LENGTH 500
+#define MATERIAL_NAME_SIZE 255
 
+class Material {
+public:
+    char name[MATERIAL_NAME_SIZE];
+    char texture_filename[OBJ_FILENAME_LENGTH];
+    float amb[3];
+    float diff[3];
+    float spec[3];
+    float reflect;
+    float refract;
+    float trans;
+    float shiny;
+    float glossy;
+    float refract_index;
+};
 
 #endif

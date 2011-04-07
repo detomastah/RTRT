@@ -1,5 +1,23 @@
+/* 
+    RTRT source code
+    Copyright (C) 2011  Łukasz Pełszyński
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
 #include "camera.h"
-#include "face.h"
 
 void RT_Camera_Construct(RT_Camera *camera, SDL_Surface* screen, int w, int h) 
 {
@@ -10,45 +28,27 @@ void RT_Camera_Construct(RT_Camera *camera, SDL_Surface* screen, int w, int h)
     camera->screen = screen;
 }
 
-void RT_Camera_SimpleRender(const void *self, RT_Scene *scene) 
+void RT_Camera_SimpleRender(const void *self, Scene *scene) 
 {
     RT_Camera *camera = (RT_Camera*)self;
     int i, j, k;
     for(i=0; i<camera->width; i++) 
         for(j=0; j<camera->height; j++) 
         {
-            RT_Ray current_ray;
-            current_ray.o.e[0] = 250;
-            current_ray.o.e[1] = 250;
-            current_ray.o.e[2] = -500;
-            current_ray.d.e[0] = -320*(i-camera->width/2)/camera->width;
-            current_ray.d.e[1] = -240*(j-camera->height/2)/camera->height;
-            current_ray.d.e[2] = 280;
+            Ray r;
+            r.o = Point(250,250,-500);
+            float rdx = -320*(i-camera->width/2)/camera->width;
+            float rdy = -240*(j-camera->height/2)/camera->height;
+            r.d = Vector(rdx, rdy ,280);
             
-            float t, best_t = 99999999;
+            Intersection i;
             
-            int hit = 0, best_index;
-            
-            for(k=0; k<scene->face_count; k++)
+            if (scene->Intersect(&r, &i)) 
             {
-                RT_Face *f = &scene->face_list[k];
+                //int material_index = scene->face_list[best_index].material_index;
+                //Material *mat = scene->materials[material_index];
                 
-                if (RT_Face_Intersect(f, scene, &current_ray, &t))
-                {
-                    hit = 1; 
-                    if (t<best_t) 
-                    {
-                        best_t = t;
-                        best_index = k;
-                    }
-                }
-            }
-            if (hit) 
-            {
-                int material_index = scene->face_list[best_index].material_index;
-                obj_material *mat = &scene->material_list[material_index];
-                
-                setpixel(camera->screen, i, j, mat->diff[0]*255, mat->diff[1]*255, mat->diff[2]*255 );
+                //setpixel(camera->screen, i, j, mat->diff[0]*255, mat->diff[1]*255, mat->diff[2]*255 );
             }
         }    
 }

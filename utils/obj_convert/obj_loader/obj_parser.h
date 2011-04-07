@@ -5,7 +5,7 @@
 
 
 
-#include "../../../src/scene.h"
+#include "scene.h"
 
 typedef struct
 {

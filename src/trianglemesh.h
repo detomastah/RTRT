@@ -17,9 +17,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#ifndef BASICS
-#define BASICS
+#ifndef RTRT_TRIANGLEMESH_H
+#define RTRT_TRIANGLEMESH_H
 
+#include "rtrt.h"
+#include "geometry.h"
 
+class Scene;
+
+class TriangleMesh {
+public:
+    TriangleMesh(int nv, int nt, Point *p, int *vi, int *mi);
+    int ntris;
+    int nverts;
+    int *vertexIndex;
+    int *materialIndex;
+    Point *p;
+    Scene *scene;    
+};
+
+class Triangle {
+public:
+    int GetMaterialIndex();
+    TriangleMesh *mesh;
+    int *v;
+};
 
 #endif

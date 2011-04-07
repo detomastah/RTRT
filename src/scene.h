@@ -1,21 +1,41 @@
-#ifndef SCENE
-#define SCENE
+/* 
+    RTRT source code
+    Copyright (C) 2011  Łukasz Pełszyński
 
-#include "basics.h"
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-typedef struct 
-{
-    int vertex_count;
-    int vertex_normal_count;
-    int face_count;
-    int material_count;
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
+
+#ifndef SCENE_H
+#define SCENE_H
+
+#include "rtrt.h"
+#include "geometry.h"
+#include "trianglemesh.h"
+#include "material.h"
+
+class Intersection {
+};
+
+class Scene : public ReferenceCounted {
+public:
+    Scene();
+    ~Scene();
+    bool LoadFromFile(const char *fileName);
+    bool Intersect(const Ray *r, Intersection *isect);
     
-    RT_Face *face_list;
-    RT_Vector *vertex_list;
-    RT_Vector *vertex_normal_list;
-    RT_Material *material_list;
-} RT_Scene;
-
-void RT_Scene_Load(RT_Scene *scene, char *file_name);
+    TriangleMesh *tm;
+};
 
 #endif
