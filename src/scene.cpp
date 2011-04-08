@@ -26,16 +26,16 @@ int line_num;
 string current_file;
 
 Scene::Scene() {
-    tm = NULL;
+    mesh = NULL;
 }
 
 Scene::~Scene() {
-    if (tm)
-        delete tm;
+    if (mesh)
+        delete mesh;
 }
 
 bool Scene::Intersect(const Ray *r, Intersection *isect) {
-    return true;
+    return mesh->Intersect(r, isect);
 }
 
 bool Scene::LoadFromFile(const char *fileName) {
@@ -56,15 +56,14 @@ bool Scene::LoadFromFile(const char *fileName) {
     int *mi = new int[nt];
     fread(mi, nt, sizeof(int), file);
     
-    Material *mat = new Material[nm];
-    fread(mat, nm, sizeof(Material), file);
+    materials = new Material[nm];
+    fread(materials, nm, sizeof(Material), file);
     
-    tm = new TriangleMesh(nv, nt, p, vi, mi);
+    mesh = new TriangleMesh(this, nv, nt, p, vi, mi);
     
-    delete p;
-    delete vi;
-    delete mi;
-    delete mat;
+    delete[] p;
+    delete[] vi;
+    delete[] mi;
     
     fclose(file);
 }

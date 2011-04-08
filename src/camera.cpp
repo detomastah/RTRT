@@ -41,14 +41,12 @@ void RT_Camera_SimpleRender(const void *self, Scene *scene)
             float rdy = -240*(j-camera->height/2)/camera->height;
             r.d = Vector(rdx, rdy ,280);
             
-            Intersection i;
+            Intersection isect;
             
-            if (scene->Intersect(&r, &i)) 
+            if (scene->Intersect(&r, &isect)) 
             {
-                //int material_index = scene->face_list[best_index].material_index;
-                //Material *mat = scene->materials[material_index];
-                
-                //setpixel(camera->screen, i, j, mat->diff[0]*255, mat->diff[1]*255, mat->diff[2]*255 );
+                Material *mat = &scene->materials[isect.materialIndex];
+                setpixel(camera->screen, i, j, mat->diff[0]*255, mat->diff[1]*255, mat->diff[2]*255 );
             }
         }    
 }

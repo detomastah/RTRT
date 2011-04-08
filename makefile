@@ -1,10 +1,11 @@
+OPT_FLAGS := -O0
 all: converter
-	g++ -c src/scene.cpp -o src/obj/scene.o
-	g++ -c src/camera.cpp -o src/obj/camera.o
-	g++ -c src/geometry.cpp -o src/obj/geometry.o
-	g++ -c src/timer.cpp -o src/obj/timer.o
-	g++ -c src/util.cpp -o src/obj/util.o
-	g++ -c src/trianglemesh.cpp -o src/obj/trianglemesh.o		
+	g++ -c $(OPT_FLAGS) src/scene.cpp -o src/obj/scene.o
+	g++ -c $(OPT_FLAGS) src/camera.cpp -o src/obj/camera.o
+	g++ -c $(OPT_FLAGS) src/geometry.cpp -o src/obj/geometry.o
+	g++ -c $(OPT_FLAGS) src/timer.cpp -o src/obj/timer.o
+	g++ -c $(OPT_FLAGS) src/util.cpp -o src/obj/util.o
+	g++ -c $(OPT_FLAGS) src/trianglemesh.cpp -o src/obj/trianglemesh.o		
 	g++ src/test.cpp \
 	    src/obj/camera.o \
 	    src/obj/geometry.o \
@@ -12,6 +13,7 @@ all: converter
 	    src/obj/timer.o \
 	    src/obj/trianglemesh.o \
 	    src/obj/util.o \
+	    $(OPT_FLAGS) \
 	    -lSDL -o test
 converter:
 	cd utils/obj_convert; $(MAKE)

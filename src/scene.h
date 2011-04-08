@@ -25,9 +25,6 @@
 #include "trianglemesh.h"
 #include "material.h"
 
-class Intersection {
-};
-
 class Scene : public ReferenceCounted {
 public:
     Scene();
@@ -35,7 +32,8 @@ public:
     bool LoadFromFile(const char *fileName);
     bool Intersect(const Ray *r, Intersection *isect);
     
-    TriangleMesh *tm;
+    TriangleMesh *mesh;
+    Material *materials;
 };
 
 #endif

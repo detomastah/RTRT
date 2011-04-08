@@ -22,23 +22,35 @@
 
 #include "rtrt.h"
 #include "geometry.h"
+#include <vector>
 
 class Scene;
+class Triangle;
+
+class Intersection {
+public:
+    int materialIndex;
+};
 
 class TriangleMesh {
 public:
-    TriangleMesh(int nv, int nt, Point *p, int *vi, int *mi);
+    TriangleMesh(Scene *s, int nv, int nt, Point *p, int *vi, int *mi);
+    bool Intersect(const Ray *r, Intersection *isect);
+public:    
     int ntris;
     int nverts;
     int *vertexIndex;
     int *materialIndex;
+    vector<Triangle> tris;
     Point *p;
-    Scene *scene;    
+    Scene *scene;
 };
 
 class Triangle {
 public:
-    int GetMaterialIndex();
+    Triangle(TriangleMesh *m, int n);
+    bool Intersect(const Ray *ray, float *tHit, Intersection *isect) const;
+public:
     TriangleMesh *mesh;
     int *v;
 };
